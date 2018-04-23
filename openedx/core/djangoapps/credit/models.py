@@ -508,6 +508,18 @@ class CreditRequirementStatus(TimeStampedModel):
             log.error(log_msg)
             return
 
+    @classmethod
+    @transaction.atomic
+    def retire_user(cls, retired_username, retiring_username=""):
+        try:
+            requirement_statuses = cls.objects.get(username=retired_username)
+            for requirement_status in requirement_statuses:
+                requirement_status.username = retiring_username
+                requirement_status.reason = {}
+                requirement_status.save()
+        except cls.DoesNotExist:
+            return False
+
 
 def default_deadline_for_credit_eligibility():  # pylint: disable=invalid-name
     """ The default deadline to use when creating a new CreditEligibility model. """
