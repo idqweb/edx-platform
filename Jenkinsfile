@@ -1,0 +1,94 @@
+pipeline {
+
+    agent { label 'jenkins-worker' }
+
+    options {
+        timestamps()
+        timeout(75)
+    }
+
+    stages {
+        stage('Run Tests') {
+            parallel {
+                stage('lms_unit_1') {
+                    agent { label "jenkins-worker" }
+                    environment {
+                        SHARD = 1
+                        TEST_SUITE='lms-unit'
+                    }
+                    steps {
+                        sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
+                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                            sh "bash scripts/all-tests.sh"
+                        }
+                    }
+                }
+                stage('lms_unit_2') {
+                    agent { label "jenkins-worker" }
+                    environment {
+                        SHARD = 2
+                        TEST_SUITE='lms-unit'
+                    }
+                    steps{
+                        sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
+                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                            sh "bash scripts/all-tests.sh"
+                        }
+                    }
+                }
+                stage('lms_unit_3') {
+                    agent { label "jenkins-worker" }
+                    environment {
+                        SHARD = 3
+                        TEST_SUITE='lms-unit'
+                    }
+                    steps {
+                        sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
+                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                            sh "bash scripts/all-tests.sh"
+                        }
+                    }
+                }
+                stage('lms_unit_4') {
+                    agent { label "jenkins-worker" }
+                    environment {
+                        SHARD = 4
+                        TEST_SUITE='lms-unit'
+                    }
+                    steps {
+                        sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
+                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                            sh "bash scripts/all-tests.sh"
+                        }
+                    }
+                }
+                stage('cms_unit') {
+                    agent { label "jenkins-worker" }
+                    environment {
+                        SHARD = 1
+                        TEST_SUITE='cms-unit'
+                    }
+                    steps {
+                        sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
+                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                            sh "bash scripts/all-tests.sh"
+                        }
+                    }
+                }
+                stage('commonlib_unit') {
+                    agent { label "jenkins-worker" }
+                    environment {
+                        SHARD = 1
+                        TEST_SUITE='commonlib-unit'
+                    }
+                    steps {
+                        sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
+                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                            sh "bash scripts/all-tests.sh"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
