@@ -22,6 +22,12 @@ pipeline {
                             sh "bash scripts/all-tests.sh"
                         }
                     }
+                    post {
+                        always {
+                            archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/**/*,test_root/log/**/*.log,**/nosetests.xml,*.log'
+                            junit '**/nosetests.xml'
+                        }
+                    }
                 }
                 stage('lms_unit_2') {
                     agent { label "jenkins-worker" }
@@ -33,6 +39,12 @@ pipeline {
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
                             git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
                             sh "bash scripts/all-tests.sh"
+                        }
+                    }
+                    post {
+                        always {
+                            archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/**/*,test_root/log/**/*.log,**/nosetests.xml,*.log'
+                            junit '**/nosetests.xml'
                         }
                     }
                 }
@@ -48,6 +60,12 @@ pipeline {
                             sh "bash scripts/all-tests.sh"
                         }
                     }
+                    post {
+                        always {
+                            archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/**/*,test_root/log/**/*.log,**/nosetests.xml,*.log'
+                            junit '**/nosetests.xml'
+                        }
+                    }
                 }
                 stage('lms_unit_4') {
                     agent { label "jenkins-worker" }
@@ -59,6 +77,12 @@ pipeline {
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
                             git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
                             sh "bash scripts/all-tests.sh"
+                        }
+                    }
+                    post {
+                        always {
+                            archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/**/*,test_root/log/**/*.log,**/nosetests.xml,*.log'
+                            junit '**/nosetests.xml'
                         }
                     }
                 }
@@ -74,6 +98,12 @@ pipeline {
                             sh "bash scripts/all-tests.sh"
                         }
                     }
+                    post {
+                        always {
+                            archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/**/*,test_root/log/**/*.log,**/nosetests.xml,*.log'
+                            junit '**/nosetests.xml'
+                        }
+                    }
                 }
                 stage('commonlib_unit') {
                     agent { label "jenkins-worker" }
@@ -85,6 +115,12 @@ pipeline {
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
                             git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
                             sh "bash scripts/all-tests.sh"
+                        }
+                    }
+                    post {
+                        always {
+                            archiveArtifacts allowEmptyArchive: true, artifacts: 'reports/**/*,test_root/log/**/*.log,**/nosetests.xml,*.log'
+                            junit '**/nosetests.xml'
                         }
                     }
                 }
