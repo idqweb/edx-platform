@@ -518,6 +518,10 @@ class CreditRequirementStatus(TimeStampedModel):
                 requirement_status.reason = {}
                 requirement_status.save()
         except cls.DoesNotExist:
+            log.info(
+                u'Can not retire requiremenet statuses for user "%s" because the user could not be found ',
+                retiring_username
+            )
             return False
 
 

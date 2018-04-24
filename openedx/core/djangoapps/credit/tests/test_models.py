@@ -8,7 +8,7 @@ from django.test import TestCase
 from nose.plugins.attrib import attr
 from opaque_keys.edx.keys import CourseKey
 
-from openedx.core.djangoapps.credit.models import CreditCourse, CreditRequirement
+from openedx.core.djangoapps.credit.models import CreditCourse, CreditRequirement, CreditRequirementStatus
 
 
 @attr(shard=2)
@@ -85,3 +85,53 @@ class CreditEligibilityModelTests(TestCase):
         credit_course = CreditCourse(course_key=self.course_key, enabled=True)
         credit_course.save()
         return credit_course
+
+
+class CreditRequirementStatusTests(TestCase):
+    """
+    Tests for credit requirement status models.
+    """
+
+    def setUp(self):
+        super(CreditRequirementStatusTests, self).setUp()
+        self.course_key = CourseKey.from_string("edX/DemoX/Demo_Course")
+
+    def test_retire_user(self):
+        username = "username"
+        credit_course = CreditCourse(course_key=self.course_key, enabled=True)
+        credit_course.save()
+
+        requirement1 = {
+            "namespace": "grade",
+            "name": "grade",
+            "display_name": "Grade",
+            "criteria": {
+                "min_grade": 0.8
+            },
+        }
+        requirement2 = {
+            "namespace": "grade",
+            "name": "grade",
+            "display_name": "Grade",
+            "criteria": {
+                "min_grade": 0.8
+            },
+        }
+
+        for requirement in {requirement1, requirement2}:
+            credit_requirement, _ = CreditRequirement.add_or_update_course_requirement(credit_course, requirement, 0)
+            credit_requirement.append(credit_requirement)
+            CreditRequirementStatus.add_or_update_requirement_status(
+                username,
+                credit_requirement,
+                "satisfied", {"Reason"}
+            )
+            self.assertEqual(CreditRequirementStatus.get_statuses(username, credit_requirement), "satisfied")
+
+        CreditRequirementStatus.retire_user(username, "retired-user")
+
+        CreditRequirementStatus.objects.filter(username=username)
+        self.assertEqual(CreditRequirementStatus.objects.filter(username=username), None)
+
+        CreditRequirementStatus.objects.filter(username="retired-user")
+        self.assertEqual(CreditRequirementStatus.objects.filter(username="retired-user"), None)
