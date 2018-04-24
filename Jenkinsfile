@@ -18,9 +18,11 @@ pipeline {
                         TEST_SUITE='lms-unit'
                     }
                     steps {
-                        sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
-                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
-                            sh "bash scripts/all-tests.sh"
+                        ansiColor('gnome-terminal') {
+                            sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
+                                git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                                sh "bash scripts/all-tests.sh"
+                            }
                         }
                     }
                     post {
