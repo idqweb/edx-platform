@@ -14,12 +14,15 @@ pipeline {
                     agent { label "jenkins-worker" }
                     environment {
                         SHARD = 1
-                        TEST_SUITE='lms-unit'
+                        TEST_SUITE = 'lms-unit'
+                        sha1 = 'eeb5f14a7748af144f493a52be721ad944535c94'
                     }
                     steps {
                         ansiColor('gnome-terminal') {
                             sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
-                                git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                                checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '${sha1}']], doGenerateSubmoduleConfigurations:
+                                false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-worker', refspec: '+refs/heads/*:refs/remotes/origin/* +refs/pull/*:refs/remotes/origin/pr/*',
+                                url: 'git@github.com:edx/edx-platform.git']]]
                                 sh "bash scripts/all-tests.sh"
                             }
                         }
@@ -35,7 +38,7 @@ pipeline {
                     agent { label "jenkins-worker" }
                     environment {
                         SHARD = 2
-                        TEST_SUITE='lms-unit'
+                        TEST_SUITE = 'lms-unit'
                     }
                     steps{
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
@@ -54,7 +57,7 @@ pipeline {
                     agent { label "jenkins-worker" }
                     environment {
                         SHARD = 3
-                        TEST_SUITE='lms-unit'
+                        TEST_SUITE = 'lms-unit'
                     }
                     steps {
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
@@ -73,7 +76,7 @@ pipeline {
                     agent { label "jenkins-worker" }
                     environment {
                         SHARD = 4
-                        TEST_SUITE='lms-unit'
+                        TEST_SUITE = 'lms-unit'
                     }
                     steps {
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
@@ -92,7 +95,7 @@ pipeline {
                     agent { label "jenkins-worker" }
                     environment {
                         SHARD = 1
-                        TEST_SUITE='cms-unit'
+                        TEST_SUITE = 'cms-unit'
                     }
                     steps {
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
@@ -111,7 +114,7 @@ pipeline {
                     agent { label "jenkins-worker" }
                     environment {
                         SHARD = 1
-                        TEST_SUITE='commonlib-unit'
+                        TEST_SUITE = 'commonlib-unit'
                     }
                     steps {
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
