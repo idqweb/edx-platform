@@ -97,9 +97,6 @@ function run_paver_quality {
     return 0;
 }
 
-echo $SHARD
-echo $TEST_SUITE
-
 case "$TEST_SUITE" in
 
     "quality")

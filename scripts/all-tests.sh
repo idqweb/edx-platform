@@ -28,7 +28,6 @@ doCheckVars() {
 
 # Determine the CI system for the environment
 doCheckVars
-bash scripts/generic-ci-tests.sh
 
 # Run appropriate CI system script
 if [ -n "$SCRIPT_TO_RUN" ] ; then
