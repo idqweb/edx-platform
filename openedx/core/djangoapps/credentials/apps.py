@@ -22,7 +22,3 @@ class CredentialsConfig(AppConfig):
             }
         }
     }
-
-    def ready(self):
-        # Register the signals handled by bookmarks.
-        from . import signals
