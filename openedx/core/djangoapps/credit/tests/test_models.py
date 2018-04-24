@@ -98,6 +98,7 @@ class CreditRequirementStatusTests(TestCase):
 
     def test_retire_user(self):
         username = "username"
+        retired_username = "retired-user"
         credit_course = CreditCourse(course_key=self.course_key, enabled=True)
         credit_course.save()
 
@@ -120,7 +121,6 @@ class CreditRequirementStatusTests(TestCase):
 
         for requirement in (requirement1, requirement2):
             credit_requirement, _ = CreditRequirement.add_or_update_course_requirement(credit_course, requirement, 0)
-            credit_requirement.append(credit_requirement)
             CreditRequirementStatus.add_or_update_requirement_status(
                 username,
                 credit_requirement,
@@ -128,10 +128,10 @@ class CreditRequirementStatusTests(TestCase):
             )
             self.assertEqual(CreditRequirementStatus.get_statuses(username, credit_requirement), "satisfied")
 
-        CreditRequirementStatus.retire_user(username, "retired-user")
+        CreditRequirementStatus.retire_user(username, retired_username)
 
         CreditRequirementStatus.objects.filter(username=username)
         self.assertEqual(CreditRequirementStatus.objects.filter(username=username), None)
 
-        CreditRequirementStatus.objects.filter(username="retired-user")
-        self.assertEqual(CreditRequirementStatus.objects.filter(username="retired-user"), None)
+        CreditRequirementStatus.objects.filter(username=retired_username)
+        self.assertEqual(CreditRequirementStatus.objects.filter(username=retired_username), None)
