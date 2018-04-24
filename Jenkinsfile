@@ -5,7 +5,6 @@ pipeline {
     options {
         timestamps()
         timeout(75)
-        ansiColor('gnome-terminal')
     }
 
     stages {
