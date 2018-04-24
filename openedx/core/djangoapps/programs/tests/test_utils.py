@@ -1536,7 +1536,7 @@ class TestProgramMarketingDataExtender(ModuleStoreTestCase):
         }
         httpretty.register_uri(
             httpretty.GET,
-            self.ECOMMERCE_CALCULATE_DISCOUNT_ENDPOINT,
+            self.ECOMMERCE_CALCULATE_DISCOUNT_ENDPOINT + '?is_anonymous=true',
             body=json.dumps(mock_discount_data),
             content_type='application/json'
         )
