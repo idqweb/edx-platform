@@ -945,10 +945,10 @@ def get_transcript_from_contentstore(video, language, output_format, transcripts
         except (KeyError, NotFoundError):
             continue
 
-    if transcript_content is None and language == u'en':
-        raise NotFoundError('No transcript for `en` language')
-    elif transcript_content is None:
-        raise NotFoundError
+    if transcript_content is None:
+        raise NotFoundError('No transcript for `{lang}` language'.format(
+            lang=language
+        ))
 
     # add language prefix to transcript file only if language is not None
     language_prefix = '{}_'.format(language) if language else ''

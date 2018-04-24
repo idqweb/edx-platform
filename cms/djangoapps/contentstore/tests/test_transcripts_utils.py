@@ -744,7 +744,7 @@ class TestGetTranscript(SharedModuleStoreTestCase):
             edx_video_id=u'1234-5678-90'
         )
 
-    def create_transcript(self, subs_id, language=u'en', filename='video.srt', youtube_id_1_0='', html5_sources=[]):
+    def create_transcript(self, subs_id, language=u'en', filename='video.srt', youtube_id_1_0='', html5_sources=list()):
         """
         create transcript.
         """
@@ -763,11 +763,11 @@ class TestGetTranscript(SharedModuleStoreTestCase):
         )
 
         possible_subs = [subs_id, youtube_id_1_0] + transcripts_utils.get_html5_ids(html5_sources)
-        for subs_id in possible_subs:
-            if subs_id:
+        for possible_sub in possible_subs:
+            if possible_sub:
                 transcripts_utils.save_subs_to_store(
                     self.subs_sjson,
-                    subs_id,
+                    possible_sub,
                     self.video,
                     language=language,
                 )
@@ -858,7 +858,14 @@ class TestGetTranscript(SharedModuleStoreTestCase):
         },
     )
     @ddt.unpack
-    def test_get_transcript_from_contentstore(self, language, subs_id, youtube_id_1_0, html5_sources, expected_filename):
+    def test_get_transcript_from_contentstore(
+            self,
+            language,
+            subs_id,
+            youtube_id_1_0,
+            html5_sources,
+            expected_filename
+        ):
         """
         Verify that `get_transcript` function returns correct data when transcript is in content store.
         """
