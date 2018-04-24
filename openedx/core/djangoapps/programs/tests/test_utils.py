@@ -1536,7 +1536,7 @@ class TestProgramMarketingDataExtender(ModuleStoreTestCase):
         }
         httpretty.register_uri(
             httpretty.GET,
-            self.ECOMMERCE_CALCULATE_DISCOUNT_ENDPOINT + '?is_anonymous=true',
+            self.ECOMMERCE_CALCULATE_DISCOUNT_ENDPOINT,
             body=json.dumps(mock_discount_data),
             content_type='application/json'
         )
@@ -1545,6 +1545,7 @@ class TestProgramMarketingDataExtender(ModuleStoreTestCase):
         data = ProgramMarketingDataExtender(self.program, user).extend()
         self._update_discount_data(mock_discount_data)
 
+        self.assertIsNotNone(httpretty.last_request().querystring.get('is_anonymous', None))
         self.assertEqual(
             data['skus'],
             [course['course_runs'][0]['seats'][0]['sku'] for course in self.program['courses']]
