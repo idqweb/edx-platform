@@ -118,7 +118,7 @@ class CreditRequirementStatusTests(TestCase):
             },
         }
 
-        for requirement in {requirement1, requirement2}:
+        for requirement in (requirement1, requirement2):
             credit_requirement, _ = CreditRequirement.add_or_update_course_requirement(credit_course, requirement, 0)
             credit_requirement.append(credit_requirement)
             CreditRequirementStatus.add_or_update_requirement_status(
