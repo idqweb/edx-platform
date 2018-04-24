@@ -17,14 +17,12 @@ pipeline {
                         TEST_SUITE = 'lms-unit'
                     }
                     steps {
-                        ansiColor('gnome-terminal') {
-                            sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
-                                checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']],
-                                    doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [],
-                                    userRemoteConfigs: [[credentialsId: 'jenkins-worker', refspec: '+refs/heads/master:refs/remotes/origin/master',
-                                    url: 'git@github.com:edx/edx-platform.git']]]
-                                sh "bash scripts/all-tests.sh"
-                            }
+                        sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
+                            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']],
+                                doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [],
+                                userRemoteConfigs: [[credentialsId: 'jenkins-worker', refspec: '+refs/heads/master:refs/remotes/origin/master',
+                                url: 'git@github.com:edx/edx-platform.git']]]
+                            sh "bash scripts/all-tests.sh"
                         }
                     }
                     post {
