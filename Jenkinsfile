@@ -15,14 +15,14 @@ pipeline {
                     environment {
                         SHARD = 1
                         TEST_SUITE = 'lms-unit'
-                        sha1 = 'eeb5f14a7748af144f493a52be721ad944535c94'
                     }
                     steps {
                         ansiColor('gnome-terminal') {
                             sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
-                                checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '${sha1}']], doGenerateSubmoduleConfigurations:
-                                false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-worker', refspec: '+refs/heads/*:refs/remotes/origin/* +refs/pull/*:refs/remotes/origin/pr/*',
-                                url: 'git@github.com:edx/edx-platform.git']]]
+                                checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']],
+                                    doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [],
+                                    userRemoteConfigs: [[credentialsId: 'jenkins-worker', refspec: '+refs/heads/master:refs/remotes/origin/master',
+                                    url: 'git@github.com:edx/edx-platform.git']]]
                                 sh "bash scripts/all-tests.sh"
                             }
                         }
@@ -42,7 +42,10 @@ pipeline {
                     }
                     steps{
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
-                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']],
+                                doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [],
+                                userRemoteConfigs: [[credentialsId: 'jenkins-worker', refspec: '+refs/heads/master:refs/remotes/origin/master',
+                                url: 'git@github.com:edx/edx-platform.git']]]
                             sh "bash scripts/all-tests.sh"
                         }
                     }
@@ -61,7 +64,10 @@ pipeline {
                     }
                     steps {
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
-                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']],
+                                doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [],
+                                userRemoteConfigs: [[credentialsId: 'jenkins-worker', refspec: '+refs/heads/master:refs/remotes/origin/master',
+                                url: 'git@github.com:edx/edx-platform.git']]]
                             sh "bash scripts/all-tests.sh"
                         }
                     }
@@ -80,7 +86,10 @@ pipeline {
                     }
                     steps {
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
-                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']],
+                                doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [],
+                                userRemoteConfigs: [[credentialsId: 'jenkins-worker', refspec: '+refs/heads/master:refs/remotes/origin/master',
+                                url: 'git@github.com:edx/edx-platform.git']]]
                             sh "bash scripts/all-tests.sh"
                         }
                     }
@@ -99,7 +108,10 @@ pipeline {
                     }
                     steps {
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
-                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']],
+                                doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [],
+                                userRemoteConfigs: [[credentialsId: 'jenkins-worker', refspec: '+refs/heads/master:refs/remotes/origin/master',
+                                url: 'git@github.com:edx/edx-platform.git']]]
                             sh "bash scripts/all-tests.sh"
                         }
                     }
@@ -118,7 +130,10 @@ pipeline {
                     }
                     steps {
                         sshagent(credentials: ['jenkins-worker'], ignoreMissing: true) {
-                            git branch: 'youngstrom/python-pipeline-job', changelog: false, credentialsId: 'jenkins-worker', poll: false, url: 'git@github.com:edx/edx-platform.git'
+                            checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']],
+                                doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [],
+                                userRemoteConfigs: [[credentialsId: 'jenkins-worker', refspec: '+refs/heads/master:refs/remotes/origin/master',
+                                url: 'git@github.com:edx/edx-platform.git']]]
                             sh "bash scripts/all-tests.sh"
                         }
                     }
