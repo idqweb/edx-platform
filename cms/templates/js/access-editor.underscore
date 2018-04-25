@@ -4,7 +4,7 @@
         <div class="modal-section-content gating-prereq">
             <ul class="list-fields list-input">
                 <p class="field-message">
-                    <%- gettext('Select a prerequisite subsection and enter a minimum score percentage or minimum completion percentage to limit access to this subsection.') %>
+                    <%- gettext('Select a prerequisite subsection and enter a minimum score percentage and minimum completion percentage to limit access to this subsection. Allowed values are 0-100') %>
                 </p>
                 <li class="field field-select">
                     <label class="label">
