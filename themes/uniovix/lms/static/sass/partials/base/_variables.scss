@@ -1,0 +1,12 @@
+@import 'lms/static/sass/partials/base/variables';
+
+$blue: #007D8A;
+
+// Make red the primary color
+$primary: $blue;
+
+$static-path: '..' !default;
+$homepage-bg-image:url('#{$static-path}/uniovix/images/bannerHome.png');
+
+// Initialize the Open edX Bootstrap theme
+@import 'edx-bootstrap/sass/open-edx/theme';
